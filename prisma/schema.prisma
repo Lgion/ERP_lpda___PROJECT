@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Family {
+  id        Int       @id @default(autoincrement())
+  code      String    @unique
+  label     String
+  image     String?
+  products  Product[]
+}
+
+model Product {
+  id           Int       @id @default(autoincrement())
+  ref          String    @unique
+  name         String
+  price        Float
+  stock        Int       @default(0)
+  minStock     Int       @default(0)
+  vat          Float     @default(0)
+  status       String    @default("available")
+  image        String?
+  cloudinaryId String?
+  familyId     Int
+  family       Family    @relation(fields: [familyId], references: [id])
+  arrivalLines ArrivalLine[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Supplier {
+  id        Int       @id @default(autoincrement())
+  name      String
+  contact   String?
+  phone     String?
+  email     String?
+  city      String?
+  arrivals  Arrival[]
+  createdAt DateTime  @default(now())
+}
+
+model Client {
+  id        Int      @id @default(autoincrement())
+  name      String
+  type      String
+  phone     String?
+  city      String?
+  createdAt DateTime @default(now())
+}
+
+model Arrival {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
+  reference   String?
+  totalAmount Float
+  supplierId  Int
+  supplier    Supplier @relation(fields: [supplierId], references: [id])
+  lines       ArrivalLine[]
+  createdAt   DateTime @default(now())
+}
+
+model ArrivalLine {
+  id        Int      @id @default(autoincrement())
+  arrivalId Int
+  arrival   Arrival  @relation(fields: [arrivalId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  unitPrice Float
+}
