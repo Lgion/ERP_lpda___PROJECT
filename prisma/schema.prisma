@@ -10,6 +10,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
 }
+
+// NOTE: Les modèles Gestomag sont gérés par Mongoose (voir /models/gestomag/)

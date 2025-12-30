@@ -17,6 +17,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@scss/*": ["./assets/scss/*"]
+    },
     "plugins": [
       {
         "name": "next"
