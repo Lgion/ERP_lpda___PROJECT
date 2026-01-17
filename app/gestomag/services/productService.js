@@ -79,4 +79,31 @@ export const productService = {
       return null;
     }
   },
+
+  updateStock: async (id, newStock, reason) => {
+    const response = await fetch(`${API_URL}/${id}/stock`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ newStock, reason }),
+    });
+    if (!response.ok) throw new Error('Failed to update stock');
+    const { product } = await response.json();
+
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const list = JSON.parse(cached);
+      const idx = list.findIndex((p) => p.id === id);
+      if (idx !== -1) {
+        list[idx] = { ...list[idx], stock: product.stock, status: product.status };
+        localStorage.setItem(CACHE_KEY, JSON.stringify(list));
+      }
+    }
+    return product;
+  },
+
+  getStockHistory: async (id) => {
+    const response = await fetch(`${API_URL}/${id}/stock`);
+    if (!response.ok) throw new Error('Failed to fetch stock history');
+    return await response.json();
+  },
 };

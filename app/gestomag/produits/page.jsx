@@ -2,13 +2,24 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Plus, Search, Edit, Trash2 } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, History, Check, X, Pencil } from 'lucide-react';
 import { productService } from '../services/productService';
+import GmFamilyDropdown from '../../components/gestomag/FamilyDropdown';
+import StockHistoryModal from '@/app/components/gestomag/StockHistoryModal';
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  
+  // Stock editing state
+  const [editingStockId, setEditingStockId] = useState(null);
+  const [editStockValue, setEditStockValue] = useState('');
+  
+  // History modal state
+  const [historyModalOpen, setHistoryModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [historyData, setHistoryData] = useState([]);
 
   useEffect(() => {
     loadProducts();
@@ -31,6 +42,53 @@ export default function ProductList() {
     }
   };
 
+  const handleStartStockEdit = (product) => {
+    setEditingStockId(product.id);
+    setEditStockValue(product.stock);
+  };
+
+  const handleCancelStockEdit = () => {
+    setEditingStockId(null);
+    setEditStockValue('');
+  };
+
+  const handleSaveStock = async (product) => {
+    const newStock = parseInt(editStockValue, 10);
+    if (isNaN(newStock)) return;
+    if (newStock === product.stock) {
+      handleCancelStockEdit();
+      return;
+    }
+
+    try {
+      const updatedProduct = await productService.updateStock(product.id, newStock, 'Ajustement manuel depuis la liste');
+      // Update local state
+      setProducts(products.map(p => p.id === product.id ? { ...p, stock: updatedProduct.stock, status: updatedProduct.status } : p));
+      handleCancelStockEdit();
+    } catch (error) {
+      console.error(error);
+      alert('Erreur lors de la mise à jour du stock');
+    }
+  };
+
+  const handleViewHistory = async (product) => {
+    setSelectedProduct(product);
+    setHistoryModalOpen(true);
+    try {
+      const history = await productService.getStockHistory(product.id);
+      setHistoryData(history);
+    } catch (error) {
+      console.error(error);
+      alert("Impossible de charger l'historique");
+    }
+  };
+
+  const handleCloseHistory = () => {
+    setHistoryModalOpen(false);
+    setSelectedProduct(null);
+    setHistoryData([]);
+  };
+
   const filtered = products.filter(p =>
     p.name.toLowerCase().includes(search.toLowerCase()) ||
     p.ref.toLowerCase().includes(search.toLowerCase())
@@ -43,10 +101,13 @@ export default function ProductList() {
           <h1 className="gestomag__title">Produits</h1>
           <p className="gestomag__subtitle">{products.length} produit(s) au total</p>
         </div>
-        <Link href="/gestomag/produits/nouveau" className="gmBtn gmBtn--primary">
-          <Plus size={20} />
-          <span>Nouveau Produit</span>
-        </Link>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <GmFamilyDropdown />
+          <Link href="/gestomag/produits/nouveau" className="gmBtn gmBtn--primary">
+            <Plus size={20} />
+            <span>Nouveau Produit</span>
+          </Link>
+        </div>
       </header>
 
       <section className="gmToolbar">
@@ -71,7 +132,7 @@ export default function ProductList() {
               <th className="gmTable__th">Nom</th>
               <th className="gmTable__th">Famille</th>
               <th className="gmTable__th">Prix</th>
-              <th className="gmTable__th">Stock</th>
+              <th className="gmTable__th" style={{ minWidth: '150px' }}>Stock</th>
               <th className="gmTable__th">Statut</th>
               <th className="gmTable__th">Actions</th>
             </tr>
@@ -110,9 +171,48 @@ export default function ProductList() {
                   </td>
                   <td className="gmTable__td">{product.price.toFixed(2)} €</td>
                   <td className="gmTable__td">
-                    <span className={product.stock <= product.minStock ? 'gmPill gmPill--warning' : ''}>
-                      {product.stock}
-                    </span>
+                    {editingStockId === product.id ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                        <input 
+                          type="number" 
+                          className="gmForm__input"
+                          value={editStockValue}
+                          onChange={(e) => setEditStockValue(e.target.value)}
+                          style={{ width: '70px', padding: '0.25rem' }}
+                          autoFocus
+                        />
+                        <button 
+                          className="gmBtn gmBtn--icon" 
+                          style={{ color: '#10b981' }}
+                          onClick={() => handleSaveStock(product)}
+                          title="Valider"
+                        >
+                          <Check size={16} />
+                        </button>
+                        <button 
+                          className="gmBtn gmBtn--icon" 
+                          style={{ color: '#ef4444' }}
+                          onClick={handleCancelStockEdit}
+                          title="Annuler"
+                        >
+                          <X size={16} />
+                        </button>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span className={product.stock <= product.minStock ? 'gmPill gmPill--warning' : ''}>
+                          {product.stock}
+                        </span>
+                        <button 
+                          className="gmBtn gmBtn--icon"
+                          style={{ color: '#64748b', opacity: 0.6 }}
+                          onClick={() => handleStartStockEdit(product)}
+                          title="Modifier le stock"
+                        >
+                          <Pencil size={14} />
+                        </button>
+                      </div>
+                    )}
                   </td>
                   <td className="gmTable__td">
                     <span className={`gmPill gmPill--${product.status === 'available' ? 'available' : 'outOfStock'}`}>
@@ -121,6 +221,14 @@ export default function ProductList() {
                   </td>
                   <td className="gmTable__td">
                     <div className="gmTable__actions">
+                      <button
+                        className="gmBtn gmBtn--icon"
+                        onClick={() => handleViewHistory(product)}
+                        title="Historique du stock"
+                        style={{ color: '#3b82f6' }}
+                      >
+                        <History size={18} />
+                      </button>
                       <Link href={`/gestomag/produits/${product.id}`} className="gmBtn gmBtn--icon">
                         <Edit size={18} />
                       </Link>
@@ -139,6 +247,13 @@ export default function ProductList() {
           </tbody>
         </table>
       </section>
+
+      <StockHistoryModal 
+        isOpen={historyModalOpen}
+        onClose={handleCloseHistory}
+        product={selectedProduct}
+        history={historyData}
+      />
     </article>
   );
 }

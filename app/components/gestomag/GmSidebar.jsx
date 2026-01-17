@@ -16,16 +16,13 @@ import {
   Layers 
 } from 'lucide-react';
 
-const menuItems = [
+const sidebarItems = [
   { icon: LayoutDashboard, label: 'Accueil', path: '/gestomag' },
-  {
-    icon: FileText,
-    label: 'Fichier',
-    path: '/gestomag/fichier',
-    children: [
-      { icon: Box, label: 'Produits', path: '/gestomag/produits' },
-      { icon: Layers, label: 'Familles', path: '/gestomag/familles' },
-    ]
+  // Menu Fichier sans sous-menu
+  { 
+    icon: FileText, 
+    label: 'Fichier', 
+    path: '/gestomag/produits' 
   },
   { icon: ArrowLeftRight, label: 'Mouvements', path: '/gestomag/mouvements' },
   {
@@ -46,7 +43,7 @@ export default function GmSidebar() {
   const [openSubmenus, setOpenSubmenus] = useState([]);
 
   useEffect(() => {
-    menuItems.forEach(item => {
+    sidebarItems.forEach(item => {
       if (item.children) {
         const isChildActive = item.children.some(child => pathname.startsWith(child.path));
         if (isChildActive && !openSubmenus.includes(item.label)) {
@@ -76,7 +73,7 @@ export default function GmSidebar() {
       </header>
 
       <nav className="gmSidebar__nav">
-        {menuItems.map((item) => (
+        {sidebarItems.map((item) => (
           <div key={item.label} className="gmSidebar__group">
             {item.children ? (
               <>
