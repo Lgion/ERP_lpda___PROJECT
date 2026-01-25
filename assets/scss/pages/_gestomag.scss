@@ -1,0 +1,533 @@
+// ==================== GESTOMAG PAGE STYLES ====================
+
+.gestomag {
+  min-height: 100vh;
+  background-color: $gm-background;
+  color: $gm-text-primary;
+  font-family: $contenus;
+
+  &__layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  &__main {
+    flex: 1;
+    padding: $spacing-6;
+    overflow-y: auto;
+  }
+
+  &__page {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $gm-text-primary;
+  }
+
+  &__subtitle {
+    color: $gm-text-secondary;
+    font-size: 0.875rem;
+  }
+}
+
+// ==================== SIDEBAR ====================
+
+.gmSidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: $gm-surface;
+  border-right: 1px solid $gm-border;
+  display: flex;
+  flex-direction: column;
+  color: $gm-text-secondary;
+  position: sticky;
+  top: 0;
+
+  &__header {
+    padding: $spacing-6;
+    border-bottom: 1px solid $gm-border;
+  }
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, $gm-primary, $gm-primary-light);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__nav {
+    flex: 1;
+    padding: $spacing-4;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    overflow-y: auto;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-3 $spacing-4;
+    border-radius: $radius-md;
+    color: $gm-text-secondary;
+    transition: all $transition-fast;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+
+    &:hover {
+      background-color: $gm-surface-hover;
+      color: $gm-text-primary;
+    }
+
+    &--active {
+      background-color: $gm-primary;
+      color: white;
+
+      &:hover {
+        background-color: $gm-primary-hover;
+      }
+    }
+
+    &--parent {
+      justify-content: space-between;
+
+      &.is-open {
+        color: $gm-text-primary;
+        background-color: $gm-surface-hover;
+      }
+    }
+  }
+
+  &__itemContent {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+  }
+
+  &__chevron {
+    transition: transform 0.2s ease;
+
+    &.is-rotated {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__submenu {
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 1px solid $gm-border;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__subitem {
+    font-size: 0.9rem;
+    padding: $spacing-2 $spacing-3;
+  }
+
+  &__footer {
+    padding: $spacing-4;
+    border-top: 1px solid $gm-border;
+  }
+}
+
+// ==================== TOOLBAR ====================
+
+.gmToolbar {
+  display: flex;
+  gap: $spacing-4;
+  background-color: $gm-surface;
+  padding: $spacing-4;
+  border-radius: $radius-lg;
+  border: 1px solid $gm-border;
+
+  &__search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    background-color: $gm-background;
+    padding: 0 $spacing-3;
+    border-radius: $radius-md;
+    border: 1px solid $gm-border;
+
+    &:focus-within {
+      border-color: $gm-primary;
+    }
+  }
+
+  &__input {
+    background: none;
+    border: none;
+    color: $gm-text-primary;
+    width: 100%;
+    padding: $spacing-3 0;
+    outline: none;
+    font-family: $contenus;
+
+    &::placeholder {
+      color: $gm-text-muted;
+    }
+  }
+
+  &__icon {
+    color: $gm-text-muted;
+  }
+}
+
+// ==================== BUTTONS ====================
+
+.gmBtn {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-4;
+  border-radius: $radius-md;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-fast;
+  border: none;
+  font-family: $contenus;
+
+  &--primary {
+    background-color: $gm-primary;
+    color: white;
+
+    &:hover {
+      background-color: $gm-primary-hover;
+    }
+  }
+
+  &--secondary {
+    background-color: $gm-surface;
+    color: $gm-text-primary;
+    border: 1px solid $gm-border;
+
+    &:hover {
+      background-color: $gm-surface-hover;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $gm-text-secondary;
+
+    &:hover {
+      background-color: $gm-surface-hover;
+      color: $gm-text-primary;
+    }
+  }
+
+  &--icon {
+    padding: $spacing-2;
+    border-radius: $radius-sm;
+    color: $gm-text-secondary;
+
+    &:hover {
+      background-color: $gm-background;
+      color: $gm-text-primary;
+    }
+
+    &--delete:hover {
+      color: $gm-error;
+      background-color: rgba($gm-error, 0.1);
+    }
+  }
+}
+
+// ==================== CARDS & FORMS ====================
+
+.gmCard {
+  background-color: $gm-surface;
+  border: 1px solid $gm-border;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+
+  &__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $gm-text-primary;
+    margin-bottom: $spacing-4;
+    padding-bottom: $spacing-2;
+    border-bottom: 1px solid $gm-border;
+  }
+}
+
+.gmForm {
+  background-color: $gm-surface;
+  border: 1px solid $gm-border;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-8;
+
+  &__section {
+    margin-bottom: $spacing-4;
+
+    &Title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: $gm-text-primary;
+      margin-bottom: $spacing-4;
+      padding-bottom: $spacing-2;
+      border-bottom: 1px solid $gm-border;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: $spacing-4;
+
+    &--2 {
+      grid-template-columns: 1fr;
+
+      @media (min-width: $tablette) {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    &--3 {
+      grid-template-columns: 1fr;
+
+      @media (min-width: $tablette) {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    margin-bottom: $spacing-4;
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $gm-text-secondary;
+  }
+
+  &__input,
+  &__select {
+    background-color: $gm-background;
+    border: 1px solid $gm-border;
+    border-radius: $radius-md;
+    padding: $spacing-3;
+    color: $gm-text-primary;
+    outline: none;
+    transition: border-color $transition-fast;
+    width: 100%;
+    font-family: $contenus;
+
+    &:focus {
+      border-color: $gm-primary;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-4;
+    margin-top: $spacing-4;
+    padding-top: $spacing-6;
+    border-top: 1px solid $gm-border;
+  }
+}
+
+// ==================== TABLES ====================
+
+.gmTable {
+  background-color: $gm-surface;
+  border-radius: $radius-lg;
+  border: 1px solid $gm-border;
+  overflow: hidden;
+  overflow-x: auto;
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__th {
+    text-align: left;
+    padding: $spacing-4;
+    color: $gm-text-secondary;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-bottom: 1px solid $gm-border;
+    white-space: nowrap;
+  }
+
+  &__td {
+    padding: $spacing-4;
+    border-bottom: 1px solid $gm-border-light;
+    color: $gm-text-primary;
+  }
+
+  &__tr {
+    &:last-child .gmTable__td {
+      border-bottom: none;
+    }
+
+    &:hover .gmTable__td {
+      background-color: $gm-surface-hover;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-2;
+  }
+
+  &__thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: $radius-sm;
+    background-color: $gm-surface;
+    border: 1px solid $gm-border;
+  }
+}
+
+// ==================== STATUS PILLS ====================
+
+.gmPill {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+
+  &--available,
+  &--validated {
+    background-color: rgba($gm-success, 0.1);
+    color: $gm-success;
+  }
+
+  &--outOfStock,
+  &--pending {
+    background-color: rgba($gm-error, 0.1);
+    color: $gm-error;
+  }
+
+  &--warning {
+    background-color: rgba($gm-warning, 0.1);
+    color: $gm-warning;
+  }
+}
+
+// ==================== BADGE FAMILY ====================
+
+.gmBadge {
+  background-color: $gm-surface-hover;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: $gm-text-primary;
+}
+
+// ==================== STATS CARDS ====================
+
+.gmStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-4;
+
+  &__card {
+    background-color: $gm-surface;
+    border: 1px solid $gm-border;
+    border-radius: $radius-lg;
+    padding: $spacing-6;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    color: $gm-text-secondary;
+  }
+
+  &__value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $gm-text-primary;
+  }
+
+  &__trend {
+    font-size: 0.875rem;
+
+    &--up {
+      color: $gm-success;
+    }
+
+    &--down {
+      color: $gm-error;
+    }
+  }
+}
+
+// ==================== IMAGE UPLOAD ====================
+
+.gmUpload {
+  &__zone {
+    border: 2px dashed $gm-border;
+    border-radius: $radius-lg;
+    padding: $spacing-8;
+    text-align: center;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      border-color: $gm-primary;
+      background-color: rgba($gm-primary, 0.05);
+    }
+
+    &--dragover {
+      border-color: $gm-primary;
+      background-color: rgba($gm-primary, 0.1);
+    }
+  }
+
+  &__preview {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: $radius-md;
+    margin-top: $spacing-4;
+  }
+
+  &__text {
+    color: $gm-text-muted;
+    font-size: 0.875rem;
+  }
+}

@@ -11,17 +11,17 @@ export async function GET() {
       .populate('supplierId')
       .populate('lines.productId')
       .sort({ date: -1 });
-    
+
     const formatted = arrivals.map(a => ({
       ...a.toObject(),
       id: a._id,
       supplier: a.supplierId,
-      lines: a.lines.map((l: { productId: unknown; _id: unknown }) => ({
+      lines: a.lines.map((l: any) => ({
         ...l,
         product: l.productId
       }))
     }));
-    
+
     return NextResponse.json(formatted);
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });

@@ -1,0 +1,177 @@
+
+/************************************************************
+ * FAMILY DROPDOWN BEM COMPONENT
+ ************************************************************/
+
+/************************************************************
+ * PLACEHOLDER
+ ************************************************************/
+%gmFamilyDropdown {
+  position: relative;
+  display: inline-block;
+
+  &__trigger {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+    min-width: 400px;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+
+    // Show on hover of parent
+    .gmFamilyDropdown:hover & {
+      display: block;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  &__list {
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    background: #f8fafc;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #f1f5f9;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__code {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    background: #e2e8f0;
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
+    width: fit-content;
+  }
+
+  &__label {
+    font-weight: 500;
+    color: #334155;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  &__form {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+  }
+}
+
+/************************************************************
+ * MIXIN
+ ************************************************************/
+@mixin gmFamilyDropdown($paramMixi_: $gmFamilyDropdown) {
+  $paramMixi: map-merge($gmFamilyDropdown, $paramMixi_);
+  
+  @extend %gmFamilyDropdown;
+
+  &__trigger {
+    @extend %gmFamilyDropdown__trigger;
+  }
+
+  &__content {
+    @extend %gmFamilyDropdown__content;
+  }
+  
+  &__header {
+    @extend %gmFamilyDropdown__header;
+  }
+
+  &__title {
+    @extend %gmFamilyDropdown__title;
+  }
+
+  &__list {
+    @extend %gmFamilyDropdown__list;
+  }
+
+  &__item {
+    @extend %gmFamilyDropdown__item;
+  }
+
+  &__info {
+    @extend %gmFamilyDropdown__info;
+  }
+
+  &__code {
+    @extend %gmFamilyDropdown__code;
+  }
+
+  &__label {
+    @extend %gmFamilyDropdown__label;
+  }
+
+  &__actions {
+    @extend %gmFamilyDropdown__actions;
+  }
+
+  &__form {
+    @extend %gmFamilyDropdown__form;
+  }
+}
+
+/************************************************************
+ * VARIABLES
+ ************************************************************/
+$gmFamilyDropdown: (
+  default: true
+);
+
+/************************************************************
+ * CLASS GENERATION
+ ************************************************************/
+.gmFamilyDropdown {
+  @include gmFamilyDropdown();
+}

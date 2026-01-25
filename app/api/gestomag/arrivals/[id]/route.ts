@@ -10,6 +10,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     await dbConnect();
     const { id } = await params;
+    // Récupérer l'arrivage avec ses lignes
     const arrival = await Arrival.findById(id)
       .populate('supplierId')
       .populate('lines.productId');
