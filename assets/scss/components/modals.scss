@@ -1,4 +1,5 @@
-
+@use "sass:map";
+/**/
 /************************************************************
  * MODAL BEM COMPONENT
  ************************************************************/
@@ -80,6 +81,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -90,14 +92,14 @@
  * MIXIN
  ************************************************************/
 @mixin gmModal($paramMixi_: $gmModal) {
-  $paramMixi: map-merge($gmModal, $paramMixi_);
-  
+  $paramMixi: map.merge($gmModal, $paramMixi_);
+
   @extend %gmModal;
 
   &__content {
     @extend %gmModal__content;
   }
-  
+
   &__header {
     @extend %gmModal__header;
   }

@@ -1,29 +1,28 @@
+@use "./utils/variables";
+@use "./utils/functions";
+@use "./utils/mixins";
+@use "./utils/extensions";
 
-@import "./utils/variables";
-@import "./utils/functions";
-@import "./utils/mixins";
-@import "./utils/extensions";
+@use "./base/base";
+@use "./base/normalize";
+@use "./base/typography";
+// @use "./vendors/";
 
-@import "./base/base";
-@import "./base/normalize";
-@import "./base/typography";
-// @import "./vendors/";
+@use "./themes/template";
 
-@import "./themes/template";
+@use "./components/buttons";
+@use "./components/lists";
+@use "./components/cards";
+@use "./components/family-dropdown";
+@use "./components/modals";
+@use "./components/POSTS/_post";
 
-@import "./components/buttons";
-@import "./components/lists";
-@import "./components/cards";
-@import "./components/family-dropdown";
-@import "./components/modals";
-@import "./components/POSTS/_post";
+@use "./layouts/headers";
+@use "./layouts/navs";
+@use "./layouts/mains";
+@use "./layouts/footers";
 
-@import "./layouts/headers";
-@import "./layouts/navs";
-@import "./layouts/mains";
-@import "./layouts/footers";
-
-@import "./pages/all";
-@import "./pages/home";
-@import "./pages/menus";
-@import "./pages/gestomag";
+@use "./pages/all";
+@use "./pages/home";
+@use "./pages/menus";
+@use "./pages/gestomag";

@@ -1,27 +1,33 @@
+@use "variables" as *;
 @use "sass:map";
+
 /**/
 
-@mixin mobile-only($max: map.get($breakpoints, mobile)) {
-    @media screen and (max-width: $max){
-        @content;
-    }
-}
-@mixin tablette-only($min: map.get($breakpoints, mobile) + 1, $max: map.get($max, desktop) - 1) {
-    @media screen and (min-width: $min) and (max-width: $max){
-        @content;
-    }
-}
-@mixin desktop-only($min: map.get($breakpoints, desktop)) {
-    @media screen and (min-width: $min ){
-        @content;
-    }
-}
-@mixin mobile-and-tablette($max: map.get($breakpoints, desktop) -1) {
+@mixin mobile-only($max: $mobile) {
     @media screen and (max-width: $max) {
         @content;
     }
 }
-@mixin tablette-and-desktop($min: map.get($breakpoints, desktop)) {
+
+@mixin tablette-only($min: $mobile + 1, $max: $desktop - 1) {
+    @media screen and (min-width: $min) and (max-width: $max) {
+        @content;
+    }
+}
+
+@mixin desktop-only($min: $desktop) {
+    @media screen and (min-width: $min ) {
+        @content;
+    }
+}
+
+@mixin mobile-and-tablette($max: $desktop - 1) {
+    @media screen and (max-width: $max) {
+        @content;
+    }
+}
+
+@mixin tablette-and-desktop($min: $desktop) {
     @media screen and (min-width: $min) {
         @content;
     }
