@@ -26,5 +26,5 @@ export const config = {
     // // Always run for API routes
     // '/(api|trpc)(.*)',
   ],
-  runtime: "nodejs", // This might be invalid for middleware but attempting per user request
+  // runtime: "nodejs", // This might be invalid for middleware but attempting per user request
 };
