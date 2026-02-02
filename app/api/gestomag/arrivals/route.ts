@@ -17,8 +17,9 @@ export async function GET() {
       id: a._id,
       supplier: a.supplierId,
       lines: a.lines.map((l: any) => ({
-        ...l,
-        product: l.productId
+        product: l.productId,
+        quantity: l.quantity,
+        unitPrice: l.unitPrice
       }))
     }));
 
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
   try {
     await dbConnect();
     const body = await request.json();
-    const { date, reference, supplierId, lines } = body;
+    const { date, reference, supplierId, lines, attachment, attachmentCloudinaryId } = body;
 
     // Calcul du montant total
     const totalAmount = lines.reduce(
@@ -48,6 +49,8 @@ export async function POST(request: NextRequest) {
       reference,
       supplierId,
       totalAmount,
+      attachment,
+      attachmentCloudinaryId,
       lines: lines.map((line: { productId: string; quantity: number; unitPrice: number }) => ({
         productId: line.productId,
         quantity: parseInt(String(line.quantity)),

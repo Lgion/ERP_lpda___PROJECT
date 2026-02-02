@@ -239,7 +239,7 @@ export default function ProductList() {
       <header className="gestomag__header">
         <div>
           <h1 className="gestomag__title">Produits</h1>
-          <p className="gestomag__subtitle">{filtered.length} produit(s) filtré(s) sur {products.length} au total</p>
+          <p className="gestomag__subtitle"><b>{filtered.length}</b> produit(s) filtré(s) sur <b>{products.length}</b> au total</p>
         </div>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <GmFamilyDropdown />

@@ -23,7 +23,7 @@ const arrivalSchema = new mongoose.Schema({
   },
   reference: {
     type: String,
-    default: null
+    required: true
   },
   totalAmount: {
     type: Number,
@@ -33,6 +33,14 @@ const arrivalSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'GestomagSupplier',
     required: true
+  },
+  attachment: {
+    type: String,
+    default: null
+  },
+  attachmentCloudinaryId: {
+    type: String,
+    default: null
   },
   lines: [arrivalLineSchema]
 }, {

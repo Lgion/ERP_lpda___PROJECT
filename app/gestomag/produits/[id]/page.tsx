@@ -47,7 +47,7 @@ export default function ProductEditForm({ params }: { params: Promise<{ id: stri
         stock: product.stock?.toString() || '0',
         minStock: product.minStock?.toString() || '0',
         vat: product.vat?.toString() || '20',
-        familyId: product.familyId?.toString() || '',
+        familyId: product.family?.id || product.family?._id || product.familyId || '',
         image: product.image || '',
         cloudinaryId: product.cloudinaryId || ''
       });
@@ -179,7 +179,7 @@ export default function ProductEditForm({ params }: { params: Promise<{ id: stri
           <h3 className="gmForm__sectionTitle">Prix et Stock</h3>
           <div className="gmForm__grid gmForm__grid--3">
             <div className="gmForm__group">
-              <label className="gmForm__label">Prix (€)</label>
+              <label className="gmForm__label">Prix (FCFA)</label>
               <input
                 type="number"
                 name="price"

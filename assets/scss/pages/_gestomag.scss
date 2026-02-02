@@ -39,6 +39,14 @@
   &__subtitle {
     color: $gm-text-secondary;
     font-size: 0.875rem;
+
+    >b {
+      font-size: 3em;
+
+      &:last-of-type {
+        font-size: 2em;
+      }
+    }
   }
 }
 
@@ -250,6 +258,16 @@
     border-radius: $radius-sm;
     color: $gm-text-secondary;
 
+    &:not(:hover) {
+      >svg {
+        color: black;
+      }
+    }
+
+    &:hover>svg {
+      color: white !important;
+    }
+
     &:hover {
       background-color: $gm-background;
       color: $gm-text-primary;
@@ -353,6 +371,18 @@
     }
   }
 
+  &__static {
+    background-color: $gm-surface-hover;
+    border: 1px solid $gm-border;
+    border-radius: $radius-md;
+    padding: $spacing-3;
+    color: $gm-text-primary;
+    font-family: $contenus;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+  }
+
   &__actions {
     display: flex;
     justify-content: flex-end;
@@ -400,6 +430,35 @@
 
     &:hover .gmTable__td {
       background-color: $gm-surface-hover;
+    }
+
+    &--expanded {
+      animation: fadeIn 0.3s ease-in-out;
+      background: black;
+
+      &:hover .gmTable__td {
+        background-color: transparent !important;
+      }
+
+      >td>div {
+        background: #0f172a;
+        box-shadow: 0 0 1em 1px inset cornflowerblue;
+
+        >table {
+          background: #1e293b;
+          border: 1px solid #e2e8f0
+        }
+      }
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
     }
   }
 
